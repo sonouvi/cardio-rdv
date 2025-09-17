@@ -1,0 +1,26 @@
+<div class="row justify-content-center mt-5">
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Connexion</h3>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="mb-3">
+            <label for="email" class="form-label">Adresse e-mail</label>
+            <input type="email" class="form-control" id="email" formControlName="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="password" formControlName="password" required>
+          </div>
+          <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Se connecter</button>
+          </div>
+        </form>
+        <div class="text-center mt-3">
+          <a routerLink="/register">Pas encore de compte ? Inscrivez-vous</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

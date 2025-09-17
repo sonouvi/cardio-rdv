@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><i class="bi bi-heart-pulse-fill me-2"></i>Cabinet de Cardiologie</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/booking">Prendre RDV</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/appointments">Voir les RDV</a>
+        </li>
+        <li class="nav-item">
+          <ng-container *ngIf="isLoggedIn$ | async; else loggedOut">
+            <button class="btn btn-outline-light" (click)="logout()">Déconnexion</button>
+          </ng-container>
+          <ng-template #loggedOut>
+            <button class="btn btn-light" routerLink="/login">Connexion</button>
+          </ng-template>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-4">
+  <router-outlet></router-outlet>
+</main>
