@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../core/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -25,12 +25,12 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  register() {
-    if (this.registerForm.valid) {
-      const { email, password } = this.registerForm.value;
-      this.authService.register(email, password)
-        .then(() => this.router.navigate(['/appointments']))
-        .catch(err => this.errorMessage = err.message);
-    }
-  }
+   register() {
+  //   if (this.registerForm.valid) {
+  //     const { email, password } = this.registerForm.value;
+  //     this.authService.register(email, password)
+  //       .then(() => this.router.navigate(['/appointments']))
+  //       .catch(err => this.errorMessage = err.message);
+  //   }
+   }
 }

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BookingComponent } from './booking/booking.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './core/auth/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
