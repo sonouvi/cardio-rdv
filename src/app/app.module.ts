@@ -17,6 +17,10 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { RegisterComponent } from './register/register.component';
 
+// PrimeNG
+import { ButtonModule } from 'primeng/button';
+import { RouterModule } from '@angular/router';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +35,8 @@ import { RegisterComponent } from './register/register.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    ButtonModule,
+    RouterModule.forRoot([]),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
