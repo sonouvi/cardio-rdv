@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from './core/auth/auth.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+
 
 @Component({
   selector: 'app-root',
