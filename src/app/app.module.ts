@@ -10,16 +10,15 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
 import { LoginComponent } from './login/login.component';
 
-// Firebase
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { environment } from '../environments/environment';
+
 import { RegisterComponent } from './register/register.component';
 
 // PrimeNG
 import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from 'primeng/dialog';
+
 
 @NgModule({
   declarations: [
@@ -36,10 +35,9 @@ import { RouterModule } from '@angular/router';
     AppRoutingModule,
     ReactiveFormsModule,
     ButtonModule,
-    RouterModule.forRoot([]),
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    DialogModule,
+    TableModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

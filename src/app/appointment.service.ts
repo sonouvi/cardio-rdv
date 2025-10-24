@@ -1,32 +1,24 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { Appointment, APPOINTMENT_LIST } from './appointment-list/appointment.model';
 
-export interface Appointment {
-  id?: string;
-  consultationType: string;
-  appointmentDate: Date;
-  appointmentTime: string;
-  patientName: string;
-  patientEmail: string;
-  patientPhone: string;
-}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
-  private firestore: Firestore = inject(Firestore);
-  private appointmentsCollection = collection(this.firestore, 'appointments');
+  private appointmentsCollection = APPOINTMENT_LIST;
 
   constructor() { }
 
   getAppointments(): Observable<Appointment[]> {
-    return collectionData(this.appointmentsCollection, { idField: 'id' }) as Observable<Appointment[]>;
+    return of(this.appointmentsCollection)
   }
 
-  addAppointment(appointment: Appointment): Promise<any> {
-    return addDoc(this.appointmentsCollection, appointment);
+  addAppointment(appointment: Appointment) {
+    this.appointmentsCollection.push(appointment);
   }
 
   createAppointment(formData: any): Appointment {
