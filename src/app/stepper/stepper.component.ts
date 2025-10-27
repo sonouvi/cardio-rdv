@@ -53,6 +53,7 @@ export class StepperComponent implements OnInit {
         secondFormGroup: this.secondFormGroup.value,
         thirdFormGroup: this.thirdFormGroup.value,
       };
+      console.log('NEW APPOINTMENT DATA:', appointmentData);
       const newAppointment = this.appointmentService.createAppointment(appointmentData);
       this.appointmentService.addAppointment(newAppointment);
       this.router.navigate(['/confirmation']);

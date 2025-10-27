@@ -1,0 +1,20 @@
+::ng-deep .p-calendar,
+::ng-deep .p-inputtext {
+  width: 100% !important;
+}
+
+/* cibler le composant PrimeNG avec input et bouton */
+:host ::ng-deep .small-calendar {
+  font-size: 0.875rem; /* texte plus petit */
+}
+
+:host ::ng-deep .small-calendar .p-inputtext {
+  height: 40px;         /* hauteur du champ réduite */
+  padding: 0.25rem 0.5rem; /* padding interne réduit */
+  font-size: 0.875rem;
+}
+
+:host ::ng-deep .small-calendar .p-datepicker-trigger {
+  height: 40px; /* même hauteur que l'input */
+  line-height: 40px; /* alignement vertical icône */
+}

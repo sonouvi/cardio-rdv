@@ -19,11 +19,11 @@
 
 <!-- Step 2: Date and Time -->
 <div class="card shadow-sm" *ngIf="currentStep === 2">
-  <div class="card-header">Étape 2: Choix de la date et de l'''heure</div>
+  <div class="card-header">Étape 2: Choix de la date et de l'heure</div>
   <div class="card-body" [formGroup]="secondFormGroup">
     <div class="mb-3">
       <label for="appointmentDate" class="form-label">Date du rendez-vous</label>
-      <input type="date" class="form-control" id="appointmentDate" formControlName="appointmentDate">
+      <p-calendar formControlName="appointmentDate" [showIcon]="true" class="small-calendar"/>
     </div>
     <div class="mb-3">
       <label class="form-label">Heure du rendez-vous</label>
@@ -40,6 +40,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- Step 3: Patient Information -->
 <div class="card shadow-sm" *ngIf="currentStep === 3">
@@ -63,3 +64,4 @@
     </div>
   </div>
 </div>
+

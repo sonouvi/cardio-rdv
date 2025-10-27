@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: 'confirmation', component: ConfirmationComponent },
   {
     path: 'appointments',
-    component: AppointmentListComponent,
-    canActivate: [AuthGuard]
+    component: AppointmentListComponent
+    // canActivate: [AuthGuard]
   },
   { path: '', redirectTo: '/booking', pathMatch: 'full' },
   { path: '**', redirectTo: '/booking' }
