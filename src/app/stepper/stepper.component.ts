@@ -1,33 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppointmentService } from '../appointment.service';
+
+type TypeConsultation = {
+  code: string;
+  label: string;
+};
 
 @Component({
   selector: 'app-stepper',
   templateUrl: './stepper.component.html',
-  styleUrls: ['./stepper.component.css']
+  styleUrls: ['./stepper.component.css'],
 })
 export class StepperComponent implements OnInit {
   currentStep = 1;
 
-  firstFormGroup = this._formBuilder.group({
-    consultationType: ['', Validators.required],
+  TypesConsultation: Record<string, TypeConsultation> = {
+    PREMIERE_CONSULTATION: { code: 'PC', label: 'Première consultation' },
+    CONSULTATION_SUIVI: { code: 'CS', label: 'Consultation de suivi' },
+    URGENCE: { code: 'UR', label: 'Urgence' },
+  };
+
+  firstFormGroup = new FormGroup({
+    consultationType: new FormControl('', Validators.required),
   });
-  secondFormGroup = this._formBuilder.group({
-    appointmentDate: ['', Validators.required],
-    appointmentTime: ['', Validators.required],
+
+  secondFormGroup = new FormGroup({
+    appointmentDate: new FormControl(new Date(), Validators.required),
+    appointmentTime: new FormControl('', Validators.required),
   });
-  thirdFormGroup = this._formBuilder.group({
-    patientName: ['', Validators.required],
-    patientEmail: ['', [Validators.required, Validators.email]],
-    patientPhone: ['', Validators.required],
+
+  thirdFormGroup = new FormGroup({
+    patientName: new FormControl('', Validators.required),
+    patientEmail: new FormControl('', [Validators.required, Validators.email]),
+    patientPhone: new FormControl('', Validators.required),
   });
 
   availableTimes = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
 
   constructor(
-    private _formBuilder: FormBuilder, 
     private router: Router,
     private appointmentService: AppointmentService
   ) {}
@@ -54,9 +66,13 @@ export class StepperComponent implements OnInit {
         thirdFormGroup: this.thirdFormGroup.value,
       };
       console.log('NEW APPOINTMENT DATA:', appointmentData);
-      const newAppointment = this.appointmentService.createAppointment(appointmentData);
+      const newAppointment =
+        this.appointmentService.createAppointment(appointmentData);
       this.appointmentService.addAppointment(newAppointment);
       this.router.navigate(['/confirmation']);
     }
+  }
+  get consultationTypesArray() {
+    return Object.values(this.TypesConsultation);
   }
 }
