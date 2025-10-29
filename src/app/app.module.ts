@@ -20,6 +20,7 @@ import { TableModule } from 'primeng/table';
 import { RouterModule } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 
@@ -42,6 +43,7 @@ import { CalendarModule } from 'primeng/calendar';
     TableModule,
     RouterModule,
     CalendarModule,
+    TooltipModule,
     BrowserAnimationsModule 
   ],
   providers: [],

@@ -22,6 +22,15 @@ export class StepperComponent implements OnInit {
     URGENCE: { code: 'UR', label: 'Urgence' },
   };
 
+  existingAppointments = [
+    { appointmentDate: '28/10/2025', appointmentTime: '09:00' },
+    { appointmentDate: '28/10/2025', appointmentTime: '10:00' },
+    { appointmentDate: '28/10/2025', appointmentTime: '11:00' },
+    { appointmentDate: '28/10/2025', appointmentTime: '14:00' },
+    { appointmentDate: '28/10/2025', appointmentTime: '15:00' },
+    { appointmentDate: '30/10/2025', appointmentTime: '15:00' },
+  ];
+
   firstFormGroup = new FormGroup({
     consultationType: new FormControl('', Validators.required),
   });
@@ -44,7 +53,20 @@ export class StepperComponent implements OnInit {
     private appointmentService: AppointmentService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Mettre à jour automatiquement si une date est déjà présente
+    const date = this.secondFormGroup.controls.appointmentDate.value;
+    if (date) {
+      this.updateSelectedTime(date);
+    }
+
+    // Observer le changement de date
+    this.secondFormGroup.controls.appointmentDate.valueChanges.subscribe(
+      (date) => {
+        this.updateSelectedTime(date);
+      }
+    );
+  }
 
   nextStep() {
     if (this.currentStep === 1 && this.firstFormGroup.valid) {
@@ -72,7 +94,45 @@ export class StepperComponent implements OnInit {
       this.router.navigate(['/confirmation']);
     }
   }
+
   get consultationTypesArray() {
     return Object.values(this.TypesConsultation);
   }
+
+  // Fonction pour réinitialiser l'heure si elle est déjà réservée
+  updateSelectedTime(selectedDate: Date | null) {
+    if (!selectedDate) return;
+
+    const day = selectedDate.getDate().toString().padStart(2, '0');
+    const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = selectedDate.getFullYear();
+    const dateStr = `${day}/${month}/${year}`;
+
+    const selectedTime = this.secondFormGroup.controls.appointmentTime.value;
+    const isTaken = this.existingAppointments.some(
+      (appt) =>
+        appt.appointmentDate === dateStr &&
+        appt.appointmentTime === selectedTime
+    );
+
+    if (isTaken) {
+      this.secondFormGroup.controls.appointmentTime.reset();
+    }
+  }
+
+  
+// Fonction utilitaire pour savoir si un horaire est déjà réservé
+isTimeTaken(time: string): boolean {
+  const date: Date | null = this.secondFormGroup.controls.appointmentDate.value;
+  if (!date) return false;
+
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  const dateStr = `${day}/${month}/${year}`;
+
+  return this.existingAppointments.some(
+    appt => appt.appointmentDate === dateStr && appt.appointmentTime === time
+  );
+}
 }

@@ -24,14 +24,21 @@
   <div class="card-body" [formGroup]="secondFormGroup">
     <div class="mb-3">
       <label for="appointmentDate" class="form-label">Date du rendez-vous</label>
-      <p-calendar formControlName="appointmentDate" [showIcon]="true" class="small-calendar"/>
+      <p-calendar [formControl]="secondFormGroup.controls.appointmentDate" [showIcon]="true" class="small-calendar"/>
     </div>
     <div class="mb-3">
       <label class="form-label">Heure du rendez-vous</label>
       <div class="d-flex flex-wrap gap-2">
         <div *ngFor="let time of availableTimes">
-          <input type="radio" class="btn-check" name="appointmentTime" [id]="'time-' + time" [value]="time" formControlName="appointmentTime">
-          <label class="btn btn-outline-primary" [for]="'time-' + time">{{ time }}</label>
+          <input type="radio" class="btn-check" name="appointmentTime" [id]="'time-' + time" [value]="time"
+            [formControl]="secondFormGroup.controls.appointmentTime" [disabled]="isTimeTaken(time)">
+              <label [for]="'time-' + time"
+                [class]="isTimeTaken(time) ? 'btn btn-outline-secondary disabled unavailable' : 'btn btn-outline-primary'"
+                [title]="isTimeTaken(time) ? 'Indisponible' : ''"
+                >
+                {{ time }}
+                <span *ngIf="isTimeTaken(time)" class="ms-1">🚫</span>
+              </label>
         </div>
       </div>
     </div>
@@ -41,10 +48,6 @@
     </div>
   </div>
 </div>
-
-@if (currentStep === 2) {
-  <pre>{{secondFormGroup.value | json}}</pre>
-}
 
 
 <!-- Step 3: Patient Information -->
