@@ -18,3 +18,7 @@
   height: 40px; /* même hauteur que l'input */
   line-height: 40px; /* alignement vertical icône */
 }
+
+input::placeholder {
+  font-style: italic;
+}

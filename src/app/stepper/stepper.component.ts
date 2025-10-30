@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppointmentService } from '../appointment.service';
+import { NAME_PATTERN, PHONE_PATTERN } from './stepper.model';
 
 type TypeConsultation = {
   code: string;
@@ -41,9 +42,12 @@ export class StepperComponent implements OnInit {
   });
 
   thirdFormGroup = new FormGroup({
-    patientName: new FormControl('', Validators.required),
+    patientName: new FormControl('', [
+      Validators.required,
+      Validators.pattern(NAME_PATTERN.PATTERN),
+    ]),
     patientEmail: new FormControl('', [Validators.required, Validators.email]),
-    patientPhone: new FormControl('', Validators.required),
+    patientPhone: new FormControl('', [Validators.required, Validators.pattern(PHONE_PATTERN.PATTERN)]),
   });
 
   availableTimes = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
@@ -116,23 +120,38 @@ export class StepperComponent implements OnInit {
     );
 
     if (isTaken) {
+      this.secondFormGroup.controls.appointmentTime.disable();
       this.secondFormGroup.controls.appointmentTime.reset();
-    }
+    } 
   }
 
-  
-// Fonction utilitaire pour savoir si un horaire est déjà réservé
-isTimeTaken(time: string): boolean {
-  const date: Date | null = this.secondFormGroup.controls.appointmentDate.value;
-  if (!date) return false;
+  // Fonction utilitaire pour savoir si un horaire est déjà réservé
+  isTimeTaken(time: string): boolean {
+    const date: Date | null =
+      this.secondFormGroup.controls.appointmentDate.value;
+    if (!date) return false;
 
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const year = date.getFullYear();
-  const dateStr = `${day}/${month}/${year}`;
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const dateStr = `${day}/${month}/${year}`;
 
-  return this.existingAppointments.some(
-    appt => appt.appointmentDate === dateStr && appt.appointmentTime === time
-  );
-}
+    let isTimeTaken = this.existingAppointments.some(
+      (appt) =>
+        appt.appointmentDate === dateStr && appt.appointmentTime === time
+    );
+    return isTimeTaken;
+  }
+
+  get patientName() {
+    return this.thirdFormGroup.get('patientName') as FormControl;
+  }
+
+  get patientEmail() {
+    return this.thirdFormGroup.get('patientEmail') as FormControl;
+  }
+
+  get patientPhone() {
+    return this.thirdFormGroup.get('patientPhone') as FormControl;
+  }
 }
