@@ -10,16 +10,29 @@
             type="email" 
             class="form-control" 
             id="email" 
-            formControlName="email" 
-            required>
+            formControlName="email"
+            [class.is-invalid]="email.dirty && email.invalid">
+                  @if(email.dirty) {
+                  @if (email.hasError('required')) {
+                  <div class="invalid-feedback">L'adresse e-mail est requise.</div>
+                  }
+                  @if(email.hasError('email')) {
+                  <div class="invalid-feedback">L'adresse e-mail doit être valide.</div>
+                  }
+                  }
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">Mot de passe</label>
             <input type="password" 
             class="form-control" 
             id="password" 
-            formControlName="password" 
-            required>
+            formControlName="password"
+            [class.is-invalid]="password.dirty && password.invalid">
+                  @if(password.dirty) {
+                  @if (password.hasError('required')) {
+                  <div class="invalid-feedback">Le mot de passe est requis.</div>
+                  }
+                  }
           </div>
           <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
           <div class="d-grid">

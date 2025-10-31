@@ -8,7 +8,8 @@
   <div class="card-body" [formGroup]="firstFormGroup">
     <p class="card-text">Choisissez le type de consultation.</p>
     <div class="form-check" *ngFor="let type of consultationTypesArray">
-      <input class="form-check-input" type="radio" name="consultationType" [value]="type" formControlName="consultationType">
+      <input class="form-check-input" type="radio" name="consultationType" [value]="type"
+        formControlName="consultationType">
       <label class="form-check-label">{{ type.label }}</label>
     </div>
     <div class="d-flex justify-content-end mt-3">
@@ -24,7 +25,7 @@
   <div class="card-body" [formGroup]="secondFormGroup">
     <div class="mb-3">
       <label for="appointmentDate" class="form-label">Date du rendez-vous</label>
-      <p-calendar [formControl]="secondFormGroup.controls.appointmentDate" [showIcon]="true" class="small-calendar"/>
+      <p-calendar [formControl]="secondFormGroup.controls.appointmentDate" [showIcon]="true" class="small-calendar" />
     </div>
     <div class="mb-3">
       <label class="form-label">Heure du rendez-vous</label>
@@ -32,13 +33,12 @@
         <div *ngFor="let time of availableTimes">
           <input type="radio" class="btn-check" name="appointmentTime" [id]="'time-' + time" [value]="time"
             [formControl]="secondFormGroup.controls.appointmentTime">
-              <label [for]="'time-' + time"
-                [class]="isTimeTaken(time) ? 'btn btn-outline-secondary disabled unavailable' : 'btn btn-outline-primary'"
-                [title]="isTimeTaken(time) ? 'Indisponible' : ''"
-                >
-                {{ time }}
-                <span *ngIf="isTimeTaken(time)" class="ms-1">🚫</span>
-              </label>
+          <label [for]="'time-' + time"
+            [class]="isTimeTaken(time) ? 'btn btn-outline-secondary disabled unavailable' : 'btn btn-outline-primary'"
+            [title]="isTimeTaken(time) ? 'Indisponible' : ''">
+            {{ time }}
+            <span *ngIf="isTimeTaken(time)" class="ms-1">🚫</span>
+          </label>
         </div>
       </div>
     </div>
@@ -55,57 +55,95 @@
   <div class="card-header">Étape 3: Vos informations</div>
   <div class="card-body" [formGroup]="thirdFormGroup">
     <div class="mb-3">
+      <label for="gender" class="form-label">Genre</label>
+      <select id="gender" class="form-select" formControlName="gender"
+        [class.is-invalid]="patientGender.invalid && patientGender.dirty">
+        <option value="" disabled selected>-- Sélectionnez un genre --</option>
+        <option value="Homme">Homme</option>
+        <option value="Femme">Femme</option>
+        <option value="Autre">Autre</option>
+      </select>
+      @if(patientGender.dirty) {
+      @if(patientGender.hasError('required')) {
+      <div class="invalid-feedback">Le genre est requis.</div>
+      }
+      }
+    </div>
+    <div class="mb-3">
       <label for="patientName" class="form-label">Nom complet</label>
       <input type="text" class="form-control" id="patientName" formControlName="patientName" placeholder="Ex: Dupont"
         [class.is-invalid]="patientName.invalid && patientName.dirty">
       @if(patientName.dirty) {
-        @if (patientName.hasError('required')) {
-          <div class="invalid-feedback">Le nom est requis.</div>
-        }
-        @if(patientName.hasError('pattern')) {
-          <div class="invalid-feedback">Le nom ne doit contenir que des lettres et des espaces.</div>
-        }
+      @if (patientName.hasError('required')) {
+      <div class="invalid-feedback">Le nom est requis.</div>
+      }
+      @if(patientName.hasError('pattern')) {
+      <div class="invalid-feedback">Le nom ne doit contenir que des lettres et des espaces.</div>
+      }
       }
     </div>
 
     <div class="mb-3">
       <label for="patientEmail" class="form-label">Adresse e-mail</label>
-      <input type="email" 
-      class="form-control" 
-      id="patientEmail" 
-      formControlName="patientEmail"
-        [class.is-invalid]="patientEmail.dirty && patientEmail.invalid"
-        placeholder="Ex: dupont@example.com"
-      >
+      <input type="email" class="form-control" id="patientEmail" formControlName="patientEmail"
+        [class.is-invalid]="patientEmail.dirty && patientEmail.invalid" placeholder="Ex: dupont@example.com">
       @if(patientEmail.dirty) {
-        @if (patientEmail.hasError('required')) {
-          <div class="invalid-feedback">L'adresse e-mail est requise.</div>
-        }
-        @if(patientEmail.hasError('email')) {
-          <div class="invalid-feedback">L'adresse e-mail doit être valide.</div>
-        }
+      @if (patientEmail.hasError('required')) {
+      <div class="invalid-feedback">L'adresse e-mail est requise.</div>
+      }
+      @if(patientEmail.hasError('email')) {
+      <div class="invalid-feedback">L'adresse e-mail doit être valide.</div>
+      }
       }
     </div>
     <div class="mb-3">
       <label for="patientPhone" class="form-label">Numéro de téléphone</label>
-      <input type="tel" class="form-control" 
-      id="patientPhone" 
-      formControlName="patientPhone" 
-      [class.is-invalid]="patientPhone.dirty && patientPhone.invalid"
-      placeholder="Ex: 0x xx xx xx xx">
+      <input type="tel" class="form-control" id="patientPhone" formControlName="patientPhone"
+        [class.is-invalid]="patientPhone.dirty && patientPhone.invalid" placeholder="Ex: 0x xx xx xx xx">
       @if(patientPhone.dirty) {
-        @if (patientPhone.hasError('required')) {
-          <div class="invalid-feedback">Le numéro de téléphone est requis.</div>
-        }
-        @if(patientPhone.hasError('pattern')) {
-          <div class="invalid-feedback">Le numéro de téléphone doit être valide.</div>
-        }
+      @if (patientPhone.hasError('required')) {
+      <div class="invalid-feedback">Le numéro de téléphone est requis.</div>
       }
+      @if(patientPhone.hasError('pattern')) {
+      <div class="invalid-feedback">Le numéro de téléphone doit être valide.</div>
+      }
+      }
+    </div>
+    <div class="mb-3">
+      <label for="age" class="form-label">Âge</label>
+      <input type="number" id="age" class="form-control" formControlName="patientAge" placeholder="Ex: 30"
+        [class.is-invalid]="patientAge.invalid && patientAge.dirty">
+      @if(patientAge.dirty) {
+      @if (patientAge.hasError('required')) {
+      <div class="invalid-feedback">L'âge est requis.</div>
+      }
+      @if (patientAge.hasError('min') || patientAge.hasError('max')) {
+      <div class="invalid-feedback">L'âge doit être compris entre 0 et 120 ans.</div>
+      }
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="observation" class="form-label">Observation</label>
+      <textarea id="observation" class="form-control" formControlName="patientObservation" rows="2"
+        placeholder="Saisir vos observations ici..."></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="diagnostic" class="form-label">Diagnostic</label>
+      <textarea id="diagnostic" class="form-control" formControlName="patientDiagnostic" rows="2"
+        placeholder="Entrer le diagnostic..."></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="traitement" class="form-label">Traitement</label>
+      <textarea id="traitement" class="form-control" formControlName="patientTraitement" rows="2"
+        placeholder="Proposer un traitement..."></textarea>
     </div>
     <div class="d-flex justify-content-between mt-3">
       <button class="btn btn-secondary" (click)="prevStep()">Précédent</button>
-      <button class="btn btn-success" (click)="submit()" [disabled]="thirdFormGroup.invalid">Confirmer le rendez-vous</button>
+      <button class="btn btn-success" (click)="submit()" [disabled]="thirdFormGroup.invalid">Confirmer le
+        rendez-vous</button>
     </div>
   </div>
 </div>
-

@@ -21,6 +21,7 @@ import { RouterModule } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { TooltipModule } from 'primeng/tooltip';
+import { DialogComponent } from "./common/dialog/dialog.component";
 
 
 
@@ -44,7 +45,8 @@ import { TooltipModule } from 'primeng/tooltip';
     RouterModule,
     CalendarModule,
     TooltipModule,
-    BrowserAnimationsModule 
+    BrowserAnimationsModule,
+    DialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

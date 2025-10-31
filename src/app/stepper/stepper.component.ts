@@ -48,6 +48,11 @@ export class StepperComponent implements OnInit {
     ]),
     patientEmail: new FormControl('', [Validators.required, Validators.email]),
     patientPhone: new FormControl('', [Validators.required, Validators.pattern(PHONE_PATTERN.PATTERN)]),
+    age: new FormControl('', [Validators.required, Validators.min(0), Validators.max(120)]),
+    observation: new FormControl(''),
+    diagnostic: new FormControl(''),
+    traitement: new FormControl(''),
+    gender: new FormControl('', Validators.required),
   });
 
   availableTimes = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
@@ -154,4 +159,10 @@ export class StepperComponent implements OnInit {
   get patientPhone() {
     return this.thirdFormGroup.get('patientPhone') as FormControl;
   }
+
+get patientAge() { return this.thirdFormGroup.get('age')!; }
+get patientObservation() { return this.thirdFormGroup.get('observation')!; }
+get patientDiagnostic() { return this.thirdFormGroup.get('diagnostic')!; }
+get patientTraitement() { return this.thirdFormGroup.get('traitement')!; }
+get patientGender() { return this.thirdFormGroup.get('gender')!; }
 }

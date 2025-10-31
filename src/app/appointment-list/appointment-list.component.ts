@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppointmentService } from '../appointment.service';
 import { Appointment } from './appointment.model';
+import { DialogComponent } from '../common/dialog/dialog.component';
 
 @Component({
   selector: 'app-appointment-list',
@@ -13,10 +14,12 @@ export class AppointmentListComponent implements OnInit, OnDestroy {
   appointments: Appointment[] = [];
   private appointmentSubscription: Subscription | undefined;
   displayedColumns: string[] = ['patientName', 'appointmentDate', 'appointmentTime', 'consultationType', 'patientEmail', 'patientPhone'];
-  visible: boolean = false;
   dataToUpdate: Appointment = {} as Appointment;
 
+  @ViewChild(DialogComponent) dialogComponent!: DialogComponent;
+
   constructor(private appointmentService: AppointmentService) { }
+
 
   ngOnInit(): void {
     this.appointmentSubscription = this.appointmentService.getAppointments().subscribe(data => {
@@ -39,7 +42,10 @@ export class AppointmentListComponent implements OnInit, OnDestroy {
   }
 
   showDialog(appointment: Appointment): void {
-    this.visible = true;
+    console.log('show dialog call');
+    if(this.dialogComponent) {
+      this.dialogComponent.open();
+    }
 
     // this.dataToUpdate = {
     //   id: 0,
@@ -56,6 +62,8 @@ export class AppointmentListComponent implements OnInit, OnDestroy {
     //   message: messageUpdate
     // })
   }
+
+
 
   onUpdate(): void {
     // this.dataToUpdate.name = this.updateCommentForm.value.name
