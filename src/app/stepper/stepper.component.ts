@@ -9,6 +9,11 @@ type TypeConsultation = {
   label: string;
 };
 
+type TypeGender = {
+  code: string;
+  label: string;
+};
+
 @Component({
   selector: 'app-stepper',
   templateUrl: './stepper.component.html',
@@ -23,6 +28,12 @@ export class StepperComponent implements OnInit {
     URGENCE: { code: 'UR', label: 'Urgence' },
   };
 
+  TypeGender: Record<string, TypeGender> = {
+    MASCULIN: { code: 'M', label: 'Homme' },
+    FEMININ: { code: 'F', label: 'Femme' },
+    AUTRE: { code: 'A', label: 'Autre' },
+  };
+
   existingAppointments = [
     { appointmentDate: '28/10/2025', appointmentTime: '09:00' },
     { appointmentDate: '28/10/2025', appointmentTime: '10:00' },
@@ -31,6 +42,7 @@ export class StepperComponent implements OnInit {
     { appointmentDate: '28/10/2025', appointmentTime: '15:00' },
     { appointmentDate: '30/10/2025', appointmentTime: '15:00' },
   ];
+
 
   firstFormGroup = new FormGroup({
     consultationType: new FormControl('', Validators.required),
@@ -47,8 +59,15 @@ export class StepperComponent implements OnInit {
       Validators.pattern(NAME_PATTERN.PATTERN),
     ]),
     patientEmail: new FormControl('', [Validators.required, Validators.email]),
-    patientPhone: new FormControl('', [Validators.required, Validators.pattern(PHONE_PATTERN.PATTERN)]),
-    age: new FormControl('', [Validators.required, Validators.min(0), Validators.max(120)]),
+    patientPhone: new FormControl('', [
+      Validators.required,
+      Validators.pattern(PHONE_PATTERN.PATTERN),
+    ]),
+    age: new FormControl(0, [
+      Validators.required,
+      Validators.min(0),
+      Validators.max(120),
+    ]),
     observation: new FormControl(''),
     diagnostic: new FormControl(''),
     traitement: new FormControl(''),
@@ -108,6 +127,10 @@ export class StepperComponent implements OnInit {
     return Object.values(this.TypesConsultation);
   }
 
+  get genderTypesArray() {
+    return Object.values(this.TypeGender);
+  }
+
   // Fonction pour réinitialiser l'heure si elle est déjà réservée
   updateSelectedTime(selectedDate: Date | null) {
     if (!selectedDate) return;
@@ -127,7 +150,7 @@ export class StepperComponent implements OnInit {
     if (isTaken) {
       this.secondFormGroup.controls.appointmentTime.disable();
       this.secondFormGroup.controls.appointmentTime.reset();
-    } 
+    }
   }
 
   // Fonction utilitaire pour savoir si un horaire est déjà réservé
@@ -160,9 +183,20 @@ export class StepperComponent implements OnInit {
     return this.thirdFormGroup.get('patientPhone') as FormControl;
   }
 
-get patientAge() { return this.thirdFormGroup.get('age')!; }
-get patientObservation() { return this.thirdFormGroup.get('observation')!; }
-get patientDiagnostic() { return this.thirdFormGroup.get('diagnostic')!; }
-get patientTraitement() { return this.thirdFormGroup.get('traitement')!; }
-get patientGender() { return this.thirdFormGroup.get('gender')!; }
+  get patientAge() {
+    return this.thirdFormGroup.get('age') as FormControl;
+  }
+  get patientObservation() {
+    return this.thirdFormGroup.get('observation') as FormControl;
+  }
+  get patientDiagnostic() {
+    return this.thirdFormGroup.get('diagnostic') as FormControl;
+  }
+  get patientTraitement() {
+    return this.thirdFormGroup.get('traitement') as FormControl;
+  }
+
+  get patientGender() {
+    return this.thirdFormGroup.get('gender') as FormControl;
+  }
 }

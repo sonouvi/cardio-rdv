@@ -41,7 +41,74 @@
    </ng-template>
 </p-table>
 </ng-template>
-<app-dialog></app-dialog>
+<app-dialog>
+  <ng-template [ngTemplateOutlet]="consultMode">
+    
+  </ng-template>
+</app-dialog>
+
+<ng-template #consultMode>
+  <!-- Contenu principal -->
+  <div class="container mt-4 mb-5">
+
+    <h3 class="fw-bold mb-4">Détails du Rendez-vous</h3>
+
+    <div class="card p-4">
+      <div class="card-header mb-3">
+        <div class="icon-box">
+          <i class="bi bi-calendar-event fs-4 text-primary"></i>
+        </div>
+        <div>
+          <h6 class="mb-0">Consultation Générale</h6>
+          <small class="text-muted">Mardi 25 Octobre 2024 à 10:30</small>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <h6 class="text-muted">Patient</h6>
+            <p class="mb-0 fw-semibold">Jean Dupont</p>
+            <small class="text-muted">06 12 34 56 78<br>jean.dupontaemail.com</small>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-muted">Motif de la consultation</h6>
+            <p class="fw-semibold">Bilan annuel et suivi de tension.</p>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <h6 class="text-muted">Médecin</h6>
+            <p class="fw-semibold">Dr. Marie Martin, Cardiologue</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <h5 class="section-title">Résumé de la consultation</h5>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="text-muted">Observations du médecin</h6>
+            <p>Le patient se sent globalement bien. Tension artérielle stable à 120/80 mmHg. Rythme cardiaque régulier. Pas de plaintes particulières.</p>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-muted">Traitement prescrit</h6>
+            <p>Poursuivre le traitement actuel (Lisinopril 10mg, 1 fois par jour). Recommande une alimentation équilibrée et une activité physique régulière. Prochain bilan dans un an.</p>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <h6 class="text-muted">Diagnostic</h6>
+            <p>Bon état de santé général. Hypertension contrôlée.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
 
 
 

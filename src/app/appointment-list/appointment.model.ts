@@ -1,5 +1,6 @@
 export interface Appointment {
   id?: string;
+  status?: string;
   consultationType?: string;
   appointmentDate?: Date;
   appointmentTime?: string;
@@ -7,6 +8,7 @@ export interface Appointment {
   patientEmail?: string;
   patientPhone?: string;
   observations?: string;
+  practitionerId?: string;
 }
 
 export const APPOINTMENT_LIST: Appointment[] = [

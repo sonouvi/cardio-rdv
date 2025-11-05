@@ -22,6 +22,7 @@ import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogComponent } from "./common/dialog/dialog.component";
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 
 
@@ -46,7 +47,8 @@ import { DialogComponent } from "./common/dialog/dialog.component";
     CalendarModule,
     TooltipModule,
     BrowserAnimationsModule,
-    DialogComponent
+    DialogComponent,
+    RadioButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
