@@ -1,0 +1,12 @@
+.appointment-card {
+  background-color: #eaf4ff; /* bleu clair comme sur l'image */
+  padding: 14px 18px;
+  border-radius: 12px;
+}
+
+.icon-box {
+  width: 40px;
+  height: 40px;
+  background-color: #1d7ff0; /* bleu icône */
+  border-radius: 10px;
+}
